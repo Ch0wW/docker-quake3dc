@@ -25,5 +25,5 @@ EXPOSE 27960/udp
 
 ENV TERM xterm
 
-ENTRYPOINT ["./q3ded"]
-CMD ["+set dedicated 2", "+exec ffa.cfg", "+map dc_map19"]
+ENTRYPOINT ["./q3ded", "+set dedicated 2"]
+CMD ["+exec ffa.cfg", "+map dc_map19"]
