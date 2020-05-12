@@ -31,7 +31,7 @@ docker run -it --rm -d --name q3dc-ffa -p 27960:27960 -p 27960:27960/udp q3dc
 ```
 ### Customisation
   
-**IT IS PREFERABLE TO ADD A PRESET BEFORE ADDING OTHER COMMANDS**
+**IT IS PREFERABLE TO ADD A PRESET BEFORE ADDING OTHER COMMANDS.**
 
 **Presets :**
 * +exec "ffa.cfg" 
@@ -58,8 +58,7 @@ Example : I want to run a TDM server called "Best DC Server" with a timelimit of
 You'll need to add 
 ```+set net_port <PORT>``` aswell as modifying the Docker inbound/outbound port in order to be seen to the Masterserver.
 
-Example : I'll put the same TDM server above but using port 27961 :
+Example : I'll put the same TDM server above but using port 27961 instead:
 ```docker
-
  docker run -it --rm -d --name q3dc-tdm -p 27961:27961 -p 27961:27961/udp ch0ww/q3dc +exec tdm.cfg +set net_port 27961 +set sv_hostname "Best DC Server" +set fraglimit 50 +set timelimit 20
  ```
