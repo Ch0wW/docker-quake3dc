@@ -65,7 +65,7 @@ Example : I'll put the same TDM server above but using port 27961 instead:
 
 
  ### Additional infos
- * The Quake 3 packages that is used can be found [here](http://dl.baseq.fr/quake/q3dc/).
+ * The Quake 3 packages that are used can be found [here](http://dl.baseq.fr/quake/q3dc/).
  * The **18 first characters of the server hostname are visible** on your Dreamcast.
  * If you want to modify the maplist, you will need to compile the docker manually, or to create a docker symlink to 
  ```/server/q3a/baseq3/config``` , aswell as execing the file in 
