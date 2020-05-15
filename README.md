@@ -3,7 +3,7 @@ A docker image that creates a Ready-to-Use Quake 3 Arena server for Dreamcast (o
 
 ### Why this docker ?
 
-The Dreamcast still lives, and Quake 3 Arena is definitely the easiest game to revive for online play. However, creating a server with the existing, and outdated tutorials are quite painful. Besides, one pack I've noticed featured way too many junk that wasted space. I decided to make a Docker image based on his creation that simplifies everything, for a very quick and painless online experience, and updates it.
+The Dreamcast still lives, and Quake 3 Arena is definitely the easiest game to replay online. However, creating a server with the existing, and outdated tutorials around the web isn't, and lead to problems too since it uses an outdated version of the game. Besides, the server package made by Fallout, despite good, featured junk that is unnecessary for a server. I decided to make a Docker image based on his creation that simplifies everything instead.
 
 ### Features
 * Creates a Quake 3 Arena Server for Dreamcast online services.
@@ -48,7 +48,7 @@ Any command or CVar ou would use originally needs to be placed **AFTER** the ima
 * timelimit "0"
 * pointlimit "5"
 
-Example : I want to run a TDM server called "Best DC Server" with a timelimit of 20 minutes and a fraglimit of 50 :0
+Example : I want to run a TDM server called "Best DC Server" with a timelimit of 20 minutes and a fraglimit of 50 :
 ```docker
  docker run -it --rm -d --name q3dc-tdm -p 27960:27960 -p 27960:27960/udp ch0ww/q3dc +exec tdm.cfg +set sv_hostname "Best DC Server" +set fraglimit 50 +set timelimit 20
  ```
@@ -62,3 +62,9 @@ Example : I'll put the same TDM server above but using port 27961 instead:
 ```docker
  docker run -it --rm -d --name q3dc-tdm -p 27961:27961 -p 27961:27961/udp ch0ww/q3dc +exec tdm.cfg +set net_port 27961 +set sv_hostname "Best DC Server" +set fraglimit 50 +set timelimit 20
  ```
+
+
+ ### Additional infos
+ * The Quake 3 DC packages can be found [here](http://dl.baseq.fr/quake/q3dc/).
+ * The 18 first characters of the server hostname can be visible on your Dreamcast.
+ * If you want to modify the maplist, you will need to compile the docker manually, or to create a docker symlink to /server/q3a/baseq3/config.
