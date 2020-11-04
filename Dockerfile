@@ -1,29 +1,29 @@
 FROM i386/debian:jessie-slim
-MAINTAINER Ch0wW <Ch0wW@baseq.fr>
+LABEL maintainer="Ch0wW@baseq.fr"
 
-# 1) INSTALL BASICS
-RUN apt-get update && apt-get install -y wget
-
-# 2) Create user
+# Create user
 RUN groupadd -r q3dc
 RUN useradd --no-log-init --system --create-home --home-dir /server --gid q3dc q3dc
 USER q3dc
 
-# 3) Run Quake 3 DC Required files
+# Run Quake 3 DC Required files
 RUN mkdir /server/q3a
-RUN wget -O - https://dl.baseq.fr/quake/q3dc/quake3dc.tar.gz | \
-  tar -xzf - -C /server/q3a
-
 WORKDIR /server/q3a
 
-# 4) Copy configurations required for Q3A
-RUN chmod +x q3ded
-COPY config/* ./baseq3/
+COPY dockerfile_install/quake3dc.tar.gz ./
+RUN tar -xzf quake3dc.tar.gz
 
-EXPOSE 27960
+# Copy configurations required for Q3A
+RUN chmod +x q3ded
+COPY config/* ./baseq3/config/
+
+# Add the bots. Doesn't cost any space.
+COPY dockerfile_install/bots/* ./baseq3/
+
+# Default port is 27960 UDP. Expose it.
 EXPOSE 27960/udp
 
 ENV TERM xterm
 
 ENTRYPOINT ["./q3ded", "+set dedicated 2"]
-CMD ["+exec ffa.cfg", "+map dc_map19"]
+CMD ["+exec config/ffa.cfg", "+map dc_map01"]
