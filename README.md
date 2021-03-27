@@ -16,7 +16,7 @@ Besides, the only server package that is helpful has been made by Fallout, but f
 * Includes a Docker-Compose file.
 
 ### Quick installation
-1) Download the image provided by Docker HUB. **By default, it will run FFA on DC_MAP01** :
+1) Download the image provided by Docker HUB. **By default, it will run FFA on DC_MAP02**:
 ```docker
 docker run -it --rm -d --name q3dc-ffa -p 27960:27960 -p 27960:27960/udp ch0ww/q3dc
 ```
@@ -29,7 +29,7 @@ docker run -it --rm -d --name q3dc-ffa -p 27960:27960 -p 27960:27960/udp ch0ww/q
 ```docker
  docker build -t q3dc . 
 ```` 
-3) Run the image. **By default, it will run FFA on DC_MAP02** :
+3) Run the image. **By default, it will run FFA on DC_MAP02**:
 ```docker
 docker run -it --rm -d \
  --name q3dc-ffa \
