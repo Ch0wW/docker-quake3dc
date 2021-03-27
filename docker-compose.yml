@@ -2,14 +2,15 @@ version: '3.5'
 services:
     quake3dc:
         container_name: q3dc
-        image: Ch0wW/q3dc:latest
+        image: ch0ww/q3dc:latest
         restart: always
         ports: 
             - 27960:27960
             - 27960:27960/udp
         volumes:
             - ./config:/server/q3a/baseq3/config
+            - ./.q3a://.q3a
         command: 
             - +exec config/ffa.cfg 
-            - +map dc_map01
-            - +set sv_hostname "Q3A - DC Server"
+            - +map dc_map02
+            - +set sv_hostname "Q3A DC - FFA SERVER"

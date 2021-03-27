@@ -68,6 +68,7 @@ docker run -it --rm -d \
     ch0ww/q3dc \
     +set net_port 27961 \
     +exec config/tdm.cfg \
+    +map dc_map02
     +set sv_hostname "Best DC Server" \
     +set fraglimit 50 \
     +set timelimit 20
