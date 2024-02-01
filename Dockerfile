@@ -10,15 +10,14 @@ USER q3dc
 RUN mkdir /server/q3a
 WORKDIR /server/q3a
 
-COPY dockerfile_install/quake3dc.tar.gz ./
+COPY install/quake3dc.tar.gz ./
 RUN tar -xzf quake3dc.tar.gz
 
 # Copy configurations required for Q3A
 RUN chmod +x q3ded
-COPY config/* ./baseq3/config/
 
-# Add the bots. Doesn't cost any space.
-COPY dockerfile_install/bots/* ./baseq3/
+# Delete the image's baseq3 folder... Since we link it outside.
+RUN rm -rf /server/q3a/baseq3
 
 # Default port is 27960 UDP. Expose it.
 EXPOSE 27960/udp

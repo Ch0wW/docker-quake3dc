@@ -1,80 +1,88 @@
 # Quake3 Dreamcast Server Docker
-A docker image that creates a Ready-to-Use Quake 3 Arena server for Dreamcast (or 1.16n users with the Dreamcast Mappack)
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/P5P27UZHV)
+
+This project generates a Docker image that automates setting up a Quake 3 Arena server, made specifically for the Sega Dreamcast. This also is compatible with the Quake 3 Arena 1.16n clients, as long as you own the Quake 3 DC Mappack project.  
+
+---------------------
+
+# Requirements
+- docker
+- docker-compose
 
 ### Why this docker ?
 
 The Dreamcast still lives, and Quake 3 Arena is definitely one of the easiest game to replay online. 
 However, creating a server on modern systems have been known as being really problematic, and tutorials aren't updated for that purpose. 
 
-Besides, the only server package that is helpful has been made by Fallout, but featured junk that is unnecessary for a server. I decided to make a Docker image based on his creation that greatly simplifies it.
+I decided to make a Docker image that greatly simplifies it, as well as making it as clean and modulable as possible.
 
 ### Features
-* Creates a Quake 3 Arena Server for Dreamcast online services.
-* Doesn't need any optional file to run it.
+* Creates a Quake 3 Arena Server for Sega Dreamcast (and Quake 1.16n) in no time.
 * Includes Presets for all gamemodes (FFA, TDM, Duel, CTF).
-* Includes some security fixes.
 * Includes a Docker-Compose file.
 
-### Quick installation
-1) Download the image provided by Docker HUB. **By default, it will run FFA on DC_MAP02**:
-```docker
-docker run -it --rm -d --name q3dc-ffa -p 27960:27960 -p 27960:27960/udp ch0ww/q3dc
+### Installation/Usage
+
+Simply edit the `docker-compose.yml` to add or modify anything you require.
+
+If you need to change the port of your server, change all occurences of `27960` (= in `ports` and in the `command` sections) to the desired port of your choice.
+
+```yml
+version: '3.5'
+
+services:
+  quake3dc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user: "1000:1000" # <- Change this to your UID:GID
+    restart: always
+    ports: 
+      - 27960:27960
+      - 27960:27960/udp
+    volumes:
+      - ./config/baseq3:/server/q3a/baseq3
+      - ./.q3a://.q3a
+    command: 
+      - +set net_port 27960 +exec presets/ffa.cfg +map dc_map02 +set sv_hostname "Q3A DC - FFA SERVER" +set fraglimit 30 +set timelimit 10
 ```
-**DO NOT FORGET TO OPEN PORT 27960 (UDP) IN ORDER TO BE JOINABLE !**
 
-### Manual installation
-1) Download or git clone the project.
+Once done, just execute `docker-compose up` to make sure everything works as intended, and you should be good to go. Change also the `user` token so that it is checking with the user and group running the container, to avoid upload issues or potential permission problems.
 
-2) Build locally the image :
-```docker
- docker build -t q3dc . 
-```` 
-3) Run the image. **By default, it will run FFA on DC_MAP02**:
-```docker
-docker run -it --rm -d \
- --name q3dc-ffa \
- -p 27960:27960 \
- -p 27960:27960/udp \
- q3dc
-```
-### Customisation
-  
-**IT IS PREFERABLE TO ADD A PRESET BEFORE ADDING OTHER COMMANDS.**
+If you need to rebuild the image (for instance for testing or to add a few additional things), just type `docker-compose build` and you should be good to go.
 
-**Presets :**
-* +exec "config/ffa.cfg" for Free-For-All
-* +exec "config/tdm.cfg" for Team Deathmatch
-* +exec "config/ctf.cfg" for Capture the Flag
-* +exec "config/duel.cfg" for Tourney (1 vs 1)
+### Modifying your server configuration
 
-Any command or CVar ou would use originally needs to be placed **AFTER** the image name. Do not forget to do it that way :
+Simply go to the `config/baseq3` folder, and modify the required data you wish.
+
+#### Presets
+Server presets are located in the `presets` subfolder of `config/baseq3`.
+* `+exec "presets/ffa.cfg"` for Free-For-All
+* `+exec "presets/tdm.cfg"` for Team Deathmatch
+* `+exec "presets/ctf.cfg"` for Capture the Flag
+* `+exec "presets/duel.cfg"` for Tourney (1 vs 1)
+
+**IT IS PREFERABLE TO ADD THE SERVER PRESET BEFORE ADDING OTHER COMMANDS.**
+
+#### CVARs
+Any command or CVar ou would use originally needs to be placed **AFTER** the preset config. Its syntax is the following :
 > +set [cvar] [value]
 
-**Commands :**
-* sv_hostname "Dreamcast Server"
-* fraglimit "10"
-* timelimit "0"
-* pointlimit "5"
+Common commands are the following:
+* `+set sv_hostname "Dreamcast Server"` to change the server's hostname (*the 18 first characters are only visible on your Dreamcast*)
+* `+set fraglimit "10"` to change the frag limit.
+* `+set timelimit "0"` to change the time limit before the next map loads.
+* `+set pointlimit "5"` to change the capture limit (for Capture the Flag only)
 
-If you desire to change the port, add
-```+set net_port <PORT>``` in the commandline parameter, and modify the Docker inbound/outbound port **in order to be recognized on the Masterserver**.
+#### BOTs 
 
-Example : I'll put the same TDM server above but using port 27961 instead:
-```sh
-docker run -it --rm -d \
-    --name q3dc-tdm \
-    -p 27961:27961 \
-    -p 27961:27961/udp \
-    ch0ww/q3dc \
-    +set net_port 27961 \
-    +exec config/tdm.cfg \
-    +map dc_map02
-    +set sv_hostname "Best DC Server" \
-    +set fraglimit 50 \
-    +set timelimit 20
- ```
+This repository contains optional botfiles, in form of PK3s. By default, they are not enabled.
 
- ### Additional infos
- * The Quake 3 packages that are used can be found [here](http://dl.baseq.fr/quake/q3dc/).
- * The **18 first characters of the server hostname are visible** on your Dreamcast.
- * We **highly** recommend you using Docker-compose to run this package, if you want to modify the config files.
+Simply move all of the pk3 files from `install/bots` to `config/baseq3`, and enable them with `+set bot_enable 1`. See `config/baseq3/presets/common.cfg` to see all bot commands.
+
+#### Custom mappacks
+Be aware that support for custom mappacks requires pk3 overwrites that is outside the scope of the project! More info later, once the files from the Quake 3 DC Mappack are available.
+
+#### Quake 1.16n only support
+Since this project is primarly made for Quake 3 Arena Dreamcast users, support for Quake 1.16n exists. All you need to do is replace the entirety of the pk3 with the ones from your Quake 3 installation. Add volumes to the modfolder if you plan to use some.
