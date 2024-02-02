@@ -15,3 +15,5 @@ services:
       - ./.q3a://.q3a
     command: 
       - +set net_port 27960 +exec "presets/ffa.cfg" +map dc_map02 +set sv_hostname "Q3A DC - FFA SERVER" +set fraglimit 30 +set timelimit 10
+    security_opt:
+      - no-new-privileges:true
