@@ -1,4 +1,4 @@
-FROM i386/debian:jessie-slim
+FROM i386/debian:12-slim
 LABEL maintainer="Ch0wW@baseq.fr"
 
 # Create user
