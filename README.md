@@ -1,5 +1,9 @@
 # Quake3 Dreamcast Server Docker
 
+[![](https://raw.githubusercontent.com/Ch0wW/docker-quake3dc/master/banner.png)]()
+
+
+[![](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://patreon.baseq.fr)
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/P5P27UZHV)
 
 This project generates a Docker image that automates setting up a Quake 3 Arena server, made specifically for the Sega Dreamcast. This also is compatible with the Quake 3 Arena 1.16n clients, as long as you own the Quake 3 DC Mappack project.  
