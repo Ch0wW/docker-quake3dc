@@ -1,8 +1,8 @@
 # Quake3 Dreamcast Server Docker
 
-[![](https://raw.githubusercontent.com/Ch0wW/docker-quake3dc/master/banner.png)]()
+![Quake 3 Arena Dreamcast Docker](https://raw.githubusercontent.com/Ch0wW/docker-quake3dc/master/banner.png)
 
-
+²
 [![](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://patreon.baseq.fr)
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/P5P27UZHV)
 
